@@ -8,13 +8,13 @@
 # user configuration:
 #######################################
 # TARGET: name of the output file
-TARGET = main
+TARGET = canbusOutput
 # MCU: part number to build for
 MCU = TM4C123GH6PM
 # SOURCES: list of input source sources
 SOURCES = main.c startup_gcc.c
 # INCLUDES: list of includes, by default, use Includes directory
-INCLUDES = -IInclude
+INCLUDES = -I.
 # OUTDIR: directory to use for output
 OUTDIR = build
 # TIVAWARE_PATH: path to tivaware folder
@@ -56,7 +56,7 @@ $(OUTDIR)/%.o: src/%.c | $(OUTDIR)
 $(OUTDIR)/a.out: $(OBJECTS)
 	$(LD) -o $@ $^ $(LDFLAGS)
 
-$(OUTDIR)/main.bin: $(OUTDIR)/a.out
+$(OUTDIR)/$(TARGET).bin: $(OUTDIR)/a.out
 	$(OBJCOPY) -O binary $< $@
 
 # create the output directory

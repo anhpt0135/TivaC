@@ -12,9 +12,9 @@ TARGET = canbusOutput
 # MCU: part number to build for
 MCU = TM4C123GH6PM
 # SOURCES: list of input source sources
-SOURCES = main.c startup_gcc.c
+SOURCES = main.c startup_gcc.c PLL.c
 # INCLUDES: list of includes, by default, use Includes directory
-INCLUDES = -I.
+INCLUDES = -I. -I./src/
 # OUTDIR: directory to use for output
 OUTDIR = build
 # TIVAWARE_PATH: path to tivaware folder
@@ -23,11 +23,13 @@ TIVAWARE_PATH = /anhfolder/TIVA_C/CAN_bus
 # LD_SCRIPT: linker script
 LD_SCRIPT = $(MCU).ld
 
+FLASHDIR = /anhfolder/TIVA_C/tools/lm4tools/lm4flash
+
 # define flags
 CFLAGS = -g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
 CFLAGS +=-Os -ffunction-sections -fdata-sections -MD -std=c99 -Wall
 CFLAGS += -pedantic -DPART_$(MCU) -c -I$(TIVAWARE_PATH)
-CFLAGS += -DTARGET_IS_BLIZZARD_RA1
+CFLAGS += -DTARGET_IS_BLIZZARD_RA1 $(INCLUDES)
 LDFLAGS = -T $(LD_SCRIPT) --entry ResetISR --gc-sections
 
 #######################################
@@ -62,6 +64,9 @@ $(OUTDIR)/$(TARGET).bin: $(OUTDIR)/a.out
 # create the output directory
 $(OUTDIR):
 	$(MKDIR) $(OUTDIR)
+	
+flash:
+	$(FLASHDIR)/lm4flash $(OUTDIR)/$(TARGET).bin
 
 clean:
 	-$(RM) $(OUTDIR)/*

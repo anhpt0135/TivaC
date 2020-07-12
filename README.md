@@ -71,7 +71,7 @@ Then build lm4flash and run it:
 
     cd lm4tools/lm4flash
     make
-    lm4flash /path/to/executable.bin
+    sudo ./lm4flash /path/to/executable.bin
 
 ## Debugging with gdb
 

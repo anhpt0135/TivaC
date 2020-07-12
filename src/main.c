@@ -1,4 +1,4 @@
-#include <stdbool.h>
+/*#include <stdbool.h>
 #include <stdint.h>
 
 #include "../driverlib/can.h"
@@ -6,12 +6,14 @@
 #include "../driverlib/pin_map.h"
 #include "../driverlib/rom.h"
 #include "../driverlib/sysctl.h"
+#include "../driverlib/interrupt.h"
 #include "../inc/hw_types.h"
 #include "../inc/hw_gpio.h"
 #include "../inc/hw_memmap.h"
 #include "../inc/hw_sysctl.h"
 #include "../inc/tm4c123gh6pm.h"
 #include "PLL.h"
+#include "Timer3A.h"
 
 #define LED_RED GPIO_PIN_1
 #define LED_BLUE GPIO_PIN_2
@@ -53,11 +55,17 @@ void PortF_Output(uint32_t data) { // write PF3-PF1 outputs
 	GPIO_PORTF_DATA_R = data;
 }
 
-int main(void) {
+
+void UserTask(void){
+	GPIO_PORTF_DATA_R ^= RED;
+}
+
+int main1(void) {
 	uint32_t status;
 	PLL_Init(Bus80MHz);
 	PortF_Init();              // initialize PF0 and PF4 and make them inputs
-							   // make PF3-1 out (PF3-1 built-in LEDs)
+	Timer3A_Init(UserTask, 80000000, 2);// 2 Hz
+	IntMasterEnable();
 	while (1) {
 		status = PortF_Input_Debounce();
 		switch (status) {       // switches are negative logic on PF0 and PF4
@@ -75,6 +83,77 @@ int main(void) {
 			break;      		// neither switch pressed
 		}
 	}
+}*/
+
+#include <stdint.h>
+#include <stdbool.h>
+#include "inc/tm4c123gh6pm.h"
+#include "inc/hw_memmap.h"
+#include "inc/hw_types.h"
+#include "driverlib/sysctl.h"
+#include "driverlib/interrupt.h"
+#include "driverlib/gpio.h"
+#include "driverlib/timer.h"
+
+
+void Timer0A_Init(void){
+	uint32_t ui32Period;
+	//Kich hoat timer0
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);
+	TimerConfigure(TIMER0_BASE, TIMER_CFG_PERIODIC);	//Cau hinh timer
+
+	ui32Period = (SysCtlClockGet() /10) /2;		//Thiet lap gia tri cua chu ky dua tren tan so he thong
+	TimerLoadSet(TIMER0_BASE, TIMER_A, ui32Period - 1);
+
+	//Kich hoat ngat tai timer 0
+	IntEnable(INT_TIMER0A);
+	TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+	TimerEnable(TIMER0_BASE, TIMER_A);	//Kich hoat timer0
+}
+
+void Timer0A_Init_new(uint32_t period){
+	SYSCTL_RCGCTIMER_R |= SYSCTL_RCGCTIMER_R0;
+	while((SYSCTL_RCGCTIMER_R&SYSCTL_RCGCTIMER_R0) == 0){};
+	TIMER0_CTL_R &= ~TIMER_CTL_TAEN;// Disable timer0A while initializing
+	TIMER0_CFG_R = TIMER_CFG_32_BIT_TIMER; //32 bit mode
+	TIMER0_TAMR_R = TIMER_TAMR_TAMR_PERIOD;
+	TIMER0_TAPR_R = 0;
+	TIMER0_TAILR_R = period -1;
+	TIMER0_IMR_R |= TIMER_IMR_TATOIM;// timeout interrupt
+	TIMER0_ICR_R |= TIMER_ICR_TATOCINT;
+	NVIC_PRI4_R = (NVIC_PRI4_R & 0x00FFFFFF) | (2U << 29);
+	NVIC_EN0_R = 0x00080000;//Enable interrupt 19 in Nvic
+	TIMER0_CTL_R |= TIMER_CTL_TAEN;
+
+}
+
+int main(void)
+{
+	// Khai bao bien
+	// Cau hinh clock he thong
+	SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_XTAL_16MHZ | SYSCTL_OSC_MAIN);//400/5 with 5 = 4 + 1, and fill 4 into bit 22
+	//Kich hoat port F
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);	//Cau hinh 3 LED la output, o day chi su dung led 2 thoi
+	//Timer0A_Init();
+	Timer0A_Init_new(80000000);
+	IntMasterEnable();	// Kich hoat ngat master
+	while(1)
+	{}
+
+	}
+
+//Chuong trinh ngat
+void Timer0IntHandler(void) {
+	// Xoa het cac ngat timer
+	TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
+	// Doc trang thai hien tai cua chan PF2 (LED BLUE) sau do thuc hien chop tat led voi tan so cao
+/*	if (GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_2)) {
+		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 0);
+	} else {
+		GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, 4);
+	}*/
+	GPIO_PORTF_DATA_R ^= 0x02;
 }
 
 /*int main1()

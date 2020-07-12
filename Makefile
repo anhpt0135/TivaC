@@ -12,7 +12,7 @@ TARGET = canbusOutput
 # MCU: part number to build for
 MCU = TM4C123GH6PM
 # SOURCES: list of input source sources
-SOURCES = main.c startup_gcc.c PLL.c
+SOURCES = main.c startup_gcc.c
 # INCLUDES: list of includes, by default, use Includes directory
 INCLUDES = -I. -I./src/
 # OUTDIR: directory to use for output
@@ -26,11 +26,12 @@ LD_SCRIPT = $(MCU).ld
 FLASHDIR = /anhfolder/TIVA_C/tools/lm4tools/lm4flash
 
 # define flags
-CFLAGS = -g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
+CFLAGS = -g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
 CFLAGS +=-Os -ffunction-sections -fdata-sections -MD -std=c99 -Wall
 CFLAGS += -pedantic -DPART_$(MCU) -c -I$(TIVAWARE_PATH)
 CFLAGS += -DTARGET_IS_BLIZZARD_RA1 $(INCLUDES)
-LDFLAGS = -T $(LD_SCRIPT) --entry ResetISR --gc-sections
+LDFLAGS = -L$(TIVAWARE_PATH)/driverlib/gcc -ldriver
+LDFLAGS += -T $(LD_SCRIPT) --entry ResetISR --gc-sections
 
 #######################################
 # end of user configuration

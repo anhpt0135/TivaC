@@ -34,4 +34,10 @@ void Timer3A_Init(void(*task)(void), uint32_t period, uint32_t priority);
 
 void Timer3A_Stop(void);
 
+void Timer0A_Init_new(uint32_t period);
+
+void Timer2A_Init(uint32_t period);
+
+void Timer0A_Init(void);
+
 #endif // __TIMER2INTS_H__

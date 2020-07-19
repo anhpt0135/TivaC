@@ -43,7 +43,7 @@ static void IntDefaultHandler(void);
 //
 //*****************************************************************************
 extern void Timer0IntHandler(void);
-
+extern void Timer3A_Handler(void);
 //*****************************************************************************
 //
 // The entry point for the application.
@@ -119,7 +119,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // GPIO Port H
     IntDefaultHandler,                      // UART2 Rx and Tx
     IntDefaultHandler,                      // SSI1 Rx and Tx
-	IntDefaultHandler,                      // Timer 3 subtimer A
+	Timer3A_Handler,                      // Timer 3 subtimer A
     IntDefaultHandler,                      // Timer 3 subtimer B
     IntDefaultHandler,                      // I2C1 Master and Slave
     IntDefaultHandler,                      // Quadrature Encoder 1

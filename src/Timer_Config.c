@@ -75,7 +75,7 @@ void Timer0A_Init(void){
 	TimerLoadSet(TIMER0_BASE, TIMER_A, ui32Period - 1);
 	//Kich hoat ngat tai timer 0
 	TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);//Enalbe Timeout Interrupt in IMR of Timer0a
-	IntPrioritySet(INT_TIMER2A, 0x02);
+	IntPrioritySet(INT_TIMER2A, 0x60);//, priority #3, priority bits is 3 upper bits
 	IntEnable(INT_TIMER0A);// Enable timer0a interrupt in NVIC
 	TimerEnable(TIMER0_BASE, TIMER_A);	//Kich hoat timer0
 }

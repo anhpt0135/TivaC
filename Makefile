@@ -12,13 +12,13 @@ TARGET = canbusOutput
 # MCU: part number to build for
 MCU = TM4C123GH6PM
 # SOURCES: list of input source sources
-SOURCES = main.c startup_gcc.c Timer_Config.c
+SOURCES = main.c startup_gcc.c Timer_Config.c Adc_hal.c
 # INCLUDES: list of includes, by default, use Includes directory
 INCLUDES = -I. -I./src/
 # OUTDIR: directory to use for output
 OUTDIR = build
 # TIVAWARE_PATH: path to tivaware folder
-TIVAWARE_PATH = /anhfolder/TIVA_C/CAN_bus
+TIVAWARE_PATH = .
 
 # LD_SCRIPT: linker script
 LD_SCRIPT = $(MCU).ld

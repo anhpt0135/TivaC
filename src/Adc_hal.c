@@ -14,7 +14,7 @@
 #include "driverlib/gpio.h"
 #include "Adc_hal.h"
 
-volatile uint8_t result;
+volatile uint8_t result = 0;
 
 void Adc0_SS3_sw_trigger_init(void){
 	SYSCTL_RCGCGPIO_R|=SYSCTL_RCGCGPIO_R5;// Enable clock for Port E
@@ -50,5 +50,8 @@ void Adc0SS3Handler(void){
 	ADC0_ISC_R |= ADC_ISC_IN3;// Acknowledge the interrupt
 }
 
+uint8_t Adc0SS3GetResult(void){
+	return result;
+}
 
 

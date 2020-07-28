@@ -10,7 +10,6 @@
 
 void Adc0_SS3_sw_trigger_init(void);
 void Adc0_SS3_sw_trigger_start(void);
-void Adc0_SS3_sw_trigger_stop(void);
-
+uint8_t Adc0SS3GetResult(void);
 
 #endif /* SRC_ADC_HAL_H_ */

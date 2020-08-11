@@ -23,7 +23,7 @@ TIVAWARE_PATH = .
 # LD_SCRIPT: linker script
 LD_SCRIPT = $(MCU).ld
 
-FLASHDIR = /anhfolder/TIVA_C/tools/lm4tools/lm4flash
+FLASHDIR = /AnhFolder/PROGRAMMING/ARM/Tm4c123_ANH/lm4tools/lm4flash
 
 # define flags
 CFLAGS = -g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
@@ -47,6 +47,10 @@ RM      = rm -f
 MKDIR	= mkdir -p
 #######################################
 
+LIBGCC:=${shell ${CC} ${CFLAGS} -print-libgcc-file-name}
+LIBC:=${shell ${CC} ${CFLAGS} -print-file-name=libc.a}
+LIBM:=${shell ${CC} ${CFLAGS} -print-file-name=libm.a}
+
 # list of object files, placed in the build directory regardless of source path
 OBJECTS = $(addprefix $(OUTDIR)/,$(notdir $(SOURCES:.c=.o)))
 
@@ -57,7 +61,7 @@ $(OUTDIR)/%.o: src/%.c | $(OUTDIR)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 $(OUTDIR)/a.out: $(OBJECTS)
-	$(LD) -o $@ $^ $(LDFLAGS)
+	$(LD) -o $@ $^ $(LDFLAGS) '${LIBM}' '${LIBC}' '${LIBGCC}'
 
 $(OUTDIR)/$(TARGET).bin: $(OUTDIR)/a.out
 	$(OBJCOPY) -O binary $< $@

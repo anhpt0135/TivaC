@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include "inc/tm4c123gh6pm.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
@@ -34,7 +35,8 @@ int main(void) {
 	//Adc0_SS3_sw_trigger_init();
 	//IntMasterEnable();	// Kich hoat ngat master
 	UART_Init();
-	UART_OutString("Khong co gi quy hon");
+	UART_OutString("Khong co gi quy hon \r\n");
+	printf("Doi nguoi chi song mot lan \r\n");
 	while (1) {
 
 	}

@@ -9,6 +9,7 @@
 #include "driverlib/timer.h"
 #include "Timer_Config.h"
 #include "Adc_hal.h"
+#include "UART.h"
 
 
 void User_func(void){
@@ -29,14 +30,13 @@ int main(void) {
 			GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);//Cau hinh 3 LED la output, o day chi su dung led 2 thoi
 	//Timer0A_Init();
 	//Timer0A_Init_new(80000000);
-	Timer3A_Init(User_func, 40000000, 2);
-	Adc0_SS3_sw_trigger_init();
-	IntMasterEnable();	// Kich hoat ngat master
+	//Timer3A_Init(User_func, 40000000, 2);
+	//Adc0_SS3_sw_trigger_init();
+	//IntMasterEnable();	// Kich hoat ngat master
+	UART_Init();
+	UART_OutString("Khong co gi quy hon");
 	while (1) {
-		if(adc_flag){
-			result = Adc0SS3GetResult();
-			adc_flag = 0;
-		}
+
 	}
 }
 

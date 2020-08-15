@@ -30,6 +30,7 @@
 #include "driverlib/gpio.h"
 #include "driverlib/timer.h"
 #include "Timer_Config.h"
+#include "dbg.h"
 
 void (*PeriodicTask3)(void);   // user function
 
@@ -90,6 +91,7 @@ void Timer2A_Init(uint32_t period){
 }
 
 void Timer0A_Init_new(uint32_t period){
+	Dbg_info("Enable Clock for Timer0A");
 	SYSCTL_RCGCTIMER_R |= SYSCTL_RCGCTIMER_R0;
 	while((SYSCTL_RCGCTIMER_R&SYSCTL_RCGCTIMER_R0) == 0){};
 	TIMER0_CTL_R &= ~TIMER_CTL_TAEN;// Disable timer0A while initializing
@@ -99,7 +101,9 @@ void Timer0A_Init_new(uint32_t period){
 	TIMER0_TAILR_R = period -1;
 	TIMER0_IMR_R |= TIMER_IMR_TATOIM;// timeout interrupt
 	TIMER0_ICR_R |= TIMER_ICR_TATOCINT;
+	Dbg_info("Enable NVIC PRI4 for setting prioriy of Timer0A");
 	NVIC_PRI4_R = (NVIC_PRI4_R & 0x00FFFFFF) | (2U << 29);
+	Dbg_info("Enalbe Timer0A Interrupt in NVIC");
 	NVIC_EN0_R = 0x00080000;//Enable interrupt 19 in Nvic
 	TIMER0_CTL_R |= TIMER_CTL_TAEN;
 

@@ -50,8 +50,8 @@ void UART0_Init(void) {
 	while ((SYSCTL_PRGPIO_R & 0x01) == 0) {
 	};
 	UART0_CTL_R &= ~UART0_CTL_UART0EN;      // disable UART0
-	UART0_IBRD_R = 43; // IBRD = int(50,000,000 / (16 * 115,200)) = int(27.1267)
-	UART0_FBRD_R = 24;                     // FBRD = int(0.1267 * 64 + 0.5) = 8
+	UART0_IBRD_R = 43; // IBRD = int(80,000,000 / (16 * 115,200)) = int(43.1267)
+	UART0_FBRD_R = 24;                     // FBRD = int(0.1267 * 64 + 0.5) = 24
 										   // 8 bit word length (no parity bits, one stop bit, FIFOs)
 	UART0_LCRH_R = (UART0_LCRH_WLEN_8 | UART0_LCRH_FEN);
 	UART0_CTL_R |= 0x301;                 // enable UART0

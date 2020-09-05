@@ -12,7 +12,7 @@ TARGET = canbusOutput
 # MCU: part number to build for
 MCU = TM4C123GH6PM
 # SOURCES: list of input source sources
-SOURCES = main.c startup_gcc.c Timer_Config.c Adc_hal.c UART0.c Nokia5110.c
+SOURCES = main.c startup_gcc.c Timer_Config.c Adc_hal.c UART0.c Nokia5110.c Switch_led.c PLL.c
 # INCLUDES: list of includes, by default, use Includes directory
 INCLUDES = -I. -I./src/
 # OUTDIR: directory to use for output

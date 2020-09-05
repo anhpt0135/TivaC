@@ -26,7 +26,7 @@
  
 #include <stdint.h>
 #include "PLL.h"
-#include "../inc/tm4c123gh6pm.h"
+#include "inc/tm4c123gh6pm.h"
 
 // The #define statement SYSDIV2 in PLL.h
 // initializes the PLL to the desired frequency.
@@ -73,6 +73,19 @@ void PLL_Init(uint32_t freq){
   while((SYSCTL_RIS_R&SYSCTL_RIS_PLLLRIS)==0){};
   // 6) enable use of PLL by clearing BYPASS
   SYSCTL_RCC2_R &= ~SYSCTL_RCC2_BYPASS2;
+}
+
+void sysTick_init(){
+	NVIC_ST_CTRL_R &= ~NVIC_ST_CTRL_ENABLE;
+	NVIC_ST_CURRENT_R = 0;
+	NVIC_ST_RELOAD_R = 0x00FFFFFF;
+	NVIC_ST_CTRL_R |= (NVIC_ST_CTRL_ENABLE | NVIC_ST_CTRL_CLK_SRC);
+}
+
+void delay_systic(uint32_t value){
+	NVIC_ST_RELOAD_R = (uint32_t)(value - 1);
+	NVIC_ST_CURRENT_R = 0;
+	while((NVIC_ST_CTRL_R & NVIC_ST_CTRL_COUNT) == 0){};// wait for count flag to be set
 }
 
 

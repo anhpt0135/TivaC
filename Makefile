@@ -21,17 +21,27 @@ OUTDIR = build
 TIVAWARE_PATH = .
 
 # LD_SCRIPT: linker script
-LD_SCRIPT = $(MCU).ld
+#LD_SCRIPT = $(MCU).ld
+LD_SCRIPT = TM4C123GH6PM_NODBG.ld
+
 
 FLASHDIR = /AnhFolder/PROGRAMMING/ARM/Tm4c123_ANH/lm4tools/lm4flash
 
 # define flags
 CFLAGS = -g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+#CFLAGS = -g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
+
 CFLAGS +=-Os -ffunction-sections -fdata-sections -MD -std=c99 -Wall
-CFLAGS += -Wno-variadic-macros -DPART_$(MCU) -c -I$(TIVAWARE_PATH)
+
+#CFLAGS += -Wno-variadic-macros -DPART_$(MCU) -c -I$(TIVAWARE_PATH)
+CFLAGS += -pedantic -DPART_$(MCU) -c -I$(TIVAWARE_PATH)
+
 CFLAGS += -DTARGET_IS_BLIZZARD_RA1 $(INCLUDES)
+CFLAGS += -DNDEBUG
+
 LDFLAGS = -L$(TIVAWARE_PATH)/driverlib/gcc -ldriver
 LDFLAGS += -T $(LD_SCRIPT) --entry ResetISR --gc-sections
+
 
 #######################################
 # end of user configuration
@@ -61,7 +71,8 @@ $(OUTDIR)/%.o: src/%.c | $(OUTDIR)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 $(OUTDIR)/a.out: $(OBJECTS)
-	$(LD) -o $@ $^ $(LDFLAGS) '${LIBM}' '${LIBC}' '${LIBGCC}'
+	#$(LD) -o $@ $^ $(LDFLAGS) '${LIBM}' '${LIBC}' '${LIBGCC}'
+	$(LD) -o $@ $^ $(LDFLAGS)
 
 $(OUTDIR)/$(TARGET).bin: $(OUTDIR)/a.out
 	$(OBJCOPY) -O binary $< $@

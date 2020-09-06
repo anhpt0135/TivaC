@@ -124,10 +124,10 @@ int main(void) {
 	while (1) {
 		if (adc_flag == 1) {
 			if (((val++) % 10) == 0) {
-				printf("====ADC output value = %d========\r\n", result);
+				Dbg_info("====ADC output value = %d========\r\n", result);
 			}
 			adc_flag = 0;
-			snprintf(buff, 10, "%d", result);
+			//snprintf(buff, 10, "%d", result);
 			Nokia5110_Clear();
 //			if(a_flag){
 			Nokia5110_ClearBuffer();

@@ -64,7 +64,7 @@ uint16_t Adc0_SS3_trigger_and_get_value_without_acknowledgment(void){
 void Adc0SS3Handler(void){
 	Dbg_info("Adc0SS3Handler\r\n");
 	result = ADC0_SSFIFO3_R & 0xFFFF;
-	printf("+++result = %d\n", result);
+	Dbg_info("+++result = %d\n", result);
 	ADC0_ISC_R |= ADC_ISC_IN3;// Acknowledge the interrupt
 }
 

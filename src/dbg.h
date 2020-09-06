@@ -12,7 +12,7 @@
 #include <string.h>
 
 #ifdef NDEBUG
-#define Dbs_info(M, ...)
+#define Dbg_info(M, ...)
 #else
 #define Dbg_info(M, ...) printf("[%s: %s: %d]___"M		\
 		"\r\n", __FILE__, __func__, __LINE__, ##__VA_ARGS__)

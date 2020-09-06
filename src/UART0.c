@@ -237,58 +237,58 @@ void UART0_InString(char *bufPt, uint16_t max) {
  * Looks like newlib DOES have malloc, free, realloc, etc... but it needs sbrk
  * to define its interface with the actual SRAM heap.
  */
-static char *heap_end = 0;
-extern uint32_t _heap_bottom;
-extern uint32_t _heap_top;
+// static char *heap_end = 0;
+// extern uint32_t _heap_bottom;
+// extern uint32_t _heap_top;
 
-caddr_t _sbrk(unsigned int incr) {
-	char *prev_heap_end;
+// caddr_t _sbrk(unsigned int incr) {
+// 	char *prev_heap_end;
 
-	if (heap_end == 0) {
-		heap_end = (caddr_t) & _heap_bottom;
-	}
+// 	if (heap_end == 0) {
+// 		heap_end = (caddr_t) & _heap_bottom;
+// 	}
 
-	prev_heap_end = heap_end;
-	if (heap_end + incr > (caddr_t) & _heap_top) {
-		return (caddr_t) 0;
-	}
+// 	prev_heap_end = heap_end;
+// 	if (heap_end + incr > (caddr_t) & _heap_top) {
+// 		return (caddr_t) 0;
+// 	}
 
-	heap_end += incr;
-	return (caddr_t) prev_heap_end;
-}
+// 	heap_end += incr;
+// 	return (caddr_t) prev_heap_end;
+// }
 
-/* Newlib primitives for open, close, read, write */
-int _write(int fd, char *buf, size_t cnt) {
-	for (int i = 0; i < (int) cnt; i++) {
-		UART0_OutChar((char) buf[i]);
-	}
-	return cnt;
-}
+// /* Newlib primitives for open, close, read, write */
+// int _write(int fd, char *buf, size_t cnt) {
+// 	for (int i = 0; i < (int) cnt; i++) {
+// 		UART0_OutChar((char) buf[i]);
+// 	}
+// 	return cnt;
+// }
 
-int _read(int fd, void *buf, size_t cnt) {
-	return 1;
-}
+// int _read(int fd, void *buf, size_t cnt) {
+// 	return 1;
+// }
 
-int _open(const char *file, int flags, int mode) {
-	return -1;
-}
+// int _open(const char *file, int flags, int mode) {
+// 	return -1;
+// }
 
-int _close(int fd) {
-	return -1;
+// int _close(int fd) {
+// 	return -1;
 
-}
+// }
 
-int _fstat(int fd, struct stat *buf) {
-	return 0;
-}
+// int _fstat(int fd, struct stat *buf) {
+// 	return 0;
+// }
 
-int _isatty(int fd) {
-	return 0;
-}
+// int _isatty(int fd) {
+// 	return 0;
+// }
 
-off_t _lseek(int fd, off_t offset, int whence) {
-	return -1;
-}
+// off_t _lseek(int fd, off_t offset, int whence) {
+// 	return -1;
+// }
 
 void Clear_screen(void) {
 	UART0_OutChar(0x1B);

@@ -44,18 +44,16 @@
 //
 //*****************************************************************************
 
-#include "../../driverlib/adc.h"
-
 #include <stdbool.h>
 #include <stdint.h>
-
-#include "../../driverlib/debug.h"
-#include "../../driverlib/interrupt.h"
 #include "inc/hw_adc.h"
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
 #include "inc/hw_sysctl.h"
+#include "driverlib/adc.h"
+#include "driverlib/debug.h"
+#include "driverlib/interrupt.h"
 
 //*****************************************************************************
 //

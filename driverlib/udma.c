@@ -44,16 +44,14 @@
 //
 //*****************************************************************************
 
-#include "../../driverlib/udma.h"
-
 #include <stdbool.h>
 #include <stdint.h>
-
-#include "../../driverlib/debug.h"
-#include "../../driverlib/interrupt.h"
 #include "inc/hw_sysctl.h"
 #include "inc/hw_types.h"
 #include "inc/hw_udma.h"
+#include "driverlib/debug.h"
+#include "driverlib/interrupt.h"
+#include "driverlib/udma.h"
 
 //*****************************************************************************
 //

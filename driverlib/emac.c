@@ -45,19 +45,17 @@
 //
 //*****************************************************************************
 
-#include "../../driverlib/emac.h"
-
 #include <stdbool.h>
 #include <stdint.h>
-
-#include "../../driverlib/debug.h"
-#include "../../driverlib/interrupt.h"
-#include "../../driverlib/sw_crc.h"
-#include "../../driverlib/sysctl.h"
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
 #include "inc/hw_emac.h"
+#include "driverlib/debug.h"
+#include "driverlib/emac.h"
+#include "driverlib/sysctl.h"
+#include "driverlib/interrupt.h"
+#include "driverlib/sw_crc.h"
 
 //*****************************************************************************
 //

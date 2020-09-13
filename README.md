@@ -90,3 +90,20 @@ Thanks to Recursive Labs for their
 which this template is based on.
 
 Thanks to [Rob Stoddard](http://www.robstoddard.com/stellaris.php) for digging into the issue on soft FP versus hardware FP.
+
+sudo ./openocd --file /share/openocd/scripts/board/ek-tm4c123gxl.cfg
+
+Start OpenOCD in a separate terminal:
+
+sudo openocd -f /share/openocd/scripts/board/ek-tm4c123gxl.cfg
+
+$ cat gdb.cmd
+target remote localhost:3333
+set arm abi APCS
+monitor reset halt
+file main.elf
+load
+monitor reset
+
+$ cat prog
+arm-none-eabi-gdb --command gdb.cmd

@@ -46,13 +46,12 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-
-#include "../../driverlib/debug.h"
-#include "../../driverlib/interrupt.h"
 #include "inc/hw_ints.h"
 #include "inc/hw_sysctl.h"
 #include "inc/hw_sysexc.h"
 #include "inc/hw_types.h"
+#include "driverlib/debug.h"
+#include "driverlib/interrupt.h"
 
 //*****************************************************************************
 //

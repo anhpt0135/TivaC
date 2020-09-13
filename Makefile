@@ -28,7 +28,7 @@ LD_SCRIPT = TM4C123GH6PM_NODBG.ld
 FLASHDIR = /AnhFolder/PROGRAMMING/ARM/Tm4c123_ANH/lm4tools/lm4flash
 
 # define flags
-CFLAGS = -g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+CFLAGS = -g -O0 -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard
 #CFLAGS = -g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
 
 CFLAGS +=-Os -ffunction-sections -fdata-sections -MD -std=c99 -Wall

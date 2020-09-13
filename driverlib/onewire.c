@@ -44,20 +44,18 @@
 //
 //*****************************************************************************
 
-#include "../../driverlib/onewire.h"
-
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdint.h>
-
-#include "../../driverlib/debug.h"
-#include "../../driverlib/interrupt.h"
-#include "../../driverlib/sysctl.h"
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_onewire.h"
 #include "inc/hw_sysctl.h"
 #include "inc/hw_types.h"
+#include "driverlib/debug.h"
+#include "driverlib/interrupt.h"
+#include "driverlib/onewire.h"
+#include "driverlib/sysctl.h"
 
 //*****************************************************************************
 //

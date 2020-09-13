@@ -159,10 +159,8 @@ int main(void) {
 			Nokia5110_PrintBMP(60, 50, Enemy10Point1, 0);
 			touched_sw1 = touch(GPIO_PIN_0);
 			//touched_sw2 = touch(GPIO_PIN_4);
-			GPIO_PORTF_DATA_R =
-					(touched_sw1) ?
-							GPIO_PORTF_DATA_R | GPIO_PIN_1 :
-							GPIO_PORTF_DATA_R & ~GPIO_PIN_1;
+			GPIO_PORTF_DATA_R = (touched_sw1) ?
+			GPIO_PORTF_DATA_R | GPIO_PIN_1 : GPIO_PORTF_DATA_R & ~GPIO_PIN_1;
 			//GPIO_PORTF_DATA_R = (touched_sw2) ? GPIO_PORTF_DATA_R | GPIO_PIN_2 : GPIO_PORTF_DATA_R & ~GPIO_PIN_2;
 
 			if (touched_sw1) {

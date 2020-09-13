@@ -44,17 +44,15 @@
 //
 //*****************************************************************************
 
-#include "../../driverlib/des.h"
-
 #include <stdbool.h>
 #include <stdint.h>
-
-#include "../../driverlib/debug.h"
-#include "../../driverlib/interrupt.h"
 #include "inc/hw_des.h"
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
+#include "driverlib/debug.h"
+#include "driverlib/des.h"
+#include "driverlib/interrupt.h"
 
 //*****************************************************************************
 //

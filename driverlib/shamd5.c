@@ -37,18 +37,16 @@
 //
 //*****************************************************************************
 
-#include "../../driverlib/shamd5.h"
-
 #include <stdbool.h>
 #include <stdint.h>
-
-#include "../../driverlib/debug.h"
-#include "../../driverlib/interrupt.h"
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_nvic.h"
 #include "inc/hw_shamd5.h"
 #include "inc/hw_types.h"
+#include "driverlib/debug.h"
+#include "driverlib/interrupt.h"
+#include "driverlib/shamd5.h"
 
 //*****************************************************************************
 //
